@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101c25"><meta name="description" content="STOCKLY — Control inteligente de inventario.">
+<title>STOCKLY — Inventory Control</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <a class="brand" href="#"><span class="brand-icon">S</span><span>STOCKLY<small>INVENTORY CONTROL</small></span></a>
+  <div class="workspace"><span class="workspace-dot"></span><span>Mi negocio</span><span class="chevron">⌄</span></div>
+  <p class="nav-caption">GENERAL</p>
+  <nav>
+    <a href="#dashboard" class="nav-link active" data-page="dashboard"><b>▦</b> Panel general</a>
+    <a href="#products" class="nav-link" data-page="products"><b>▤</b> Productos <span class="nav-badge" id="productNavCount">0</span></a>
+    <a href="#movements" class="nav-link" data-page="movements"><b>⇄</b> Movimientos</a>
+    <a href="#alerts" class="nav-link" data-page="alerts"><b>⚑</b> Alertas de stock <span class="alert-count" id="alertNavCount">0</span></a>
+  </nav>
+  <p class="nav-caption second">GESTIÓN</p>
+  <nav>
+    <a href="#suppliers" class="nav-link" data-page="suppliers"><b>♧</b> Proveedores</a>
+    <a href="#reports" class="nav-link" data-page="reports"><b>▥</b> Reportes</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="plan-card"><span>✦ STOCKLY PRO</span><strong>Tu inventario,<br>siempre en orden.</strong><small>Demo interactiva · Datos locales</small></div>
+    <div class="user-profile"><div class="user-avatar">A</div><div><strong>Admin Demo</strong><small>Administrador</small></div><button id="profileBtn">···</button></div>
+  </div>
+</aside>
+<div class="mobile-header"><button id="menuBtn">☰</button><a class="brand" href="#"><span class="brand-icon">S</span><span>STOCKLY</span></a><span class="mobile-user">A</span></div>
+<main class="main">
+<header class="topbar"><div><span class="crumb">MI NEGOCIO /</span> <strong id="pageTitle">PANEL GENERAL</strong></div><div class="topbar-right"><span class="today" id="today"></span><button class="btn btn-primary btn-sm" id="topAddProduct">＋ Nuevo producto</button></div></header>
+
+<section class="page active" id="dashboard">
+  <div class="page-heading"><div><p class="eyebrow">MIÉRCOLES DE GESTIÓN · INVENTARIO</p><h1>Todo bajo <em>control.</em></h1><p class="lead">Este es el estado de tu inventario. Revisá tus productos y mantené tu negocio en movimiento.</p></div><div class="heading-icon">▦</div></div>
+  <div class="metric-grid">
+    <article class="metric"><div class="metric-top"><span>PRODUCTOS REGISTRADOS</span><i class="metric-icon blue">▤</i></div><strong id="metricProducts">0</strong><small><span class="green-text">●</span> Referencias activas</small></article>
+    <article class="metric"><div class="metric-top"><span>UNIDADES EN STOCK</span><i class="metric-icon purple">▦</i></div><strong id="metricUnits">0</strong><small>Unidades disponibles</small></article>
+    <article class="metric"><div class="metric-top"><span>VALOR DEL INVENTARIO</span><i class="metric-icon green">$</i></div><strong id="metricValue">$0</strong><small>Valorizado a costo</small></article>
+    <article class="metric warning-metric"><div class="metric-top"><span>STOCK BAJO / AGOTADO</span><i class="metric-icon orange">⚑</i></div><strong id="metricAlerts">0</strong><small><span class="orange-text">Requieren atención</span></small></article>
+  </div>
+  <div class="dashboard-grid">
+    <div class="panel inventory-panel"><div class="panel-heading"><div><p class="eyebrow">INVENTARIO</p><h2>Productos recientes</h2></div><button class="text-button" data-goto="products">Ver catálogo ↗</button></div><div class="table-wrap"><table><thead><tr><th>PRODUCTO</th><th>CATEGORÍA</th><th>SKU</th><th>STOCK</th><th>ESTADO</th></tr></thead><tbody id="recentProducts"></tbody></table></div></div>
+    <div class="panel alerts-panel"><div class="panel-heading"><div><p class="eyebrow">ATENCIÓN</p><h2>Necesitan reposición</h2></div><span class="live-dot">● EN VIVO</span></div><div id="dashboardAlerts" class="alert-list"></div><button class="subtle-button" data-goto="alerts">Ver todas las alertas <span>→</span></button></div>
+  </div>
+  <div class="dashboard-bottom">
+    <div class="panel activity-panel"><div class="panel-heading"><div><p class="eyebrow">ACTIVIDAD</p><h2>Últimos movimientos</h2></div><button class="text-button" data-goto="movements">Ver historial ↗</button></div><div id="recentMovements" class="activity-list"></div></div>
+    <div class="quick-actions"><p class="eyebrow">ACCESOS RÁPIDOS</p><h2>¿Qué necesitás hacer?</h2><button id="quickAdd"><span class="quick-icon">＋</span><span><strong>Registrar producto</strong><small>Sumá un artículo al catálogo</small></span><b>→</b></button><button id="quickMovement"><span class="quick-icon">⇄</span><span><strong>Registrar movimiento</strong><small>Entrada o salida de mercadería</small></span><b>→</b></button><button data-goto="reports"><span class="quick-icon">▥</span><span><strong>Ver reportes</strong><small>Consultá el estado de tu stock</small></span><b>→</b></button></div>
+  </div>
+</section>
+
+<section class="page" id="products">
+  <div class="section-title-row"><div><p class="eyebrow">CATÁLOGO DE MERCADERÍA</p><h1>Mis <em>productos.</em></h1><p class="lead">Administrá artículos, precios, categorías y niveles mínimos de stock.</p></div><button class="btn btn-primary" id="addProductBtn">＋ Agregar producto</button></div>
+  <div class="toolbar"><label class="search">⌕ <input id="productSearch" placeholder="Buscar por nombre, SKU o categoría..."></label><select id="categoryFilter"><option value="all">Todas las categorías</option><option>Electrónica</option><option>Accesorios</option><option>Almacén</option><option>Indumentaria</option><option>Hogar</option><option>Otros</option></select><select id="stockFilter"><option value="all">Todos los estados</option><option value="ok">Stock normal</option><option value="low">Stock bajo</option><option value="out">Agotado</option></select></div>
+  <div class="panel table-panel"><div class="table-summary"><span id="productCountLabel">0 productos</span><span>VALORES EXPRESADOS EN ARS</span></div><div class="table-wrap"><table class="full-table"><thead><tr><th>PRODUCTO / SKU</th><th>CATEGORÍA</th><th>PRECIO COSTO</th><th>PRECIO VENTA</th><th>STOCK</th><th>ESTADO</th><th></th></tr></thead><tbody id="productsTable"></tbody></table></div><div class="empty-state" id="emptyProducts" hidden>No encontramos productos con esos filtros.</div></div>
+</section>
+
+<section class="page" id="movements">
+  <div class="section-title-row"><div><p class="eyebrow">TRAZABILIDAD DE INVENTARIO</p><h1>Movimientos de <em>stock.</em></h1><p class="lead">Controlá cada entrada y salida de mercadería.</p></div><button class="btn btn-primary" id="newMovementBtn">＋ Nuevo movimiento</button></div>
+  <div class="movement-summary"><div><span>ENTRADAS REGISTRADAS</span><strong id="totalIn">0</strong></div><div><span>SALIDAS REGISTRADAS</span><strong id="totalOut">0</strong></div><div><span>UNIDADES NETAS</span><strong id="netUnits">0</strong></div></div>
+  <div class="toolbar"><label class="search">⌕ <input id="movementSearch" placeholder="Buscar producto o referencia..."></label><select id="movementFilter"><option value="all">Todos los movimientos</option><option value="in">Entradas</option><option value="out">Salidas</option></select></div>
+  <div class="panel table-panel"><div class="table-wrap"><table class="full-table"><thead><tr><th>FECHA</th><th>PRODUCTO</th><th>TIPO</th><th>CANTIDAD</th><th>MOTIVO / REFERENCIA</th></tr></thead><tbody id="movementsTable"></tbody></table></div><div class="empty-state" id="emptyMovements" hidden>No hay movimientos para mostrar.</div></div>
+</section>
+
+<section class="page" id="alerts">
+  <div class="section-title-row"><div><p class="eyebrow">PREVENÍ FALTANTES</p><h1>Alertas de <em>stock.</em></h1><p class="lead">Productos que llegaron a su mínimo o se quedaron sin unidades.</p></div><button class="btn btn-primary" data-goto="products">Ver productos</button></div>
+  <div class="alert-banner"><span>⚑</span><div><strong id="alertBannerTitle">Todo en orden</strong><p id="alertBannerText">No hay productos que requieran reposición.</p></div></div>
+  <div class="alert-cards" id="allAlerts"></div>
+</section>
+
+<section class="page" id="suppliers">
+  <div class="section-title-row"><div><p class="eyebrow">RED DE ABASTECIMIENTO</p><h1>Mis <em>proveedores.</em></h1><p class="lead">Tené a mano los contactos de quienes abastecen tu negocio.</p></div><button class="btn btn-primary" id="addSupplierBtn">＋ Nuevo proveedor</button></div>
+  <div class="supplier-grid" id="supplierGrid"></div>
+</section>
+
+<section class="page" id="reports">
+  <div class="section-title-row"><div><p class="eyebrow">DATOS PARA DECIDIR MEJOR</p><h1>Reportes de <em>inventario.</em></h1><p class="lead">Una vista rápida de la composición y valorización de tu mercadería.</p></div><button class="btn btn-secondary" id="exportCsv">↓ Exportar productos CSV</button></div>
+  <div class="report-metrics"><div class="panel"><span>VALOR TOTAL A COSTO</span><strong id="reportValue">$0</strong></div><div class="panel"><span>VALOR POTENCIAL DE VENTA</span><strong id="reportSales">$0</strong></div><div class="panel"><span>GANANCIA BRUTA POTENCIAL</span><strong id="reportProfit">$0</strong></div></div>
+  <div class="report-grid"><div class="panel"><div class="panel-heading"><div><p class="eyebrow">DISTRIBUCIÓN</p><h2>Unidades por categoría</h2></div></div><div id="categoryChart" class="category-chart"></div></div><div class="panel"><div class="panel-heading"><div><p class="eyebrow">RENDIMIENTO</p><h2>Resumen de catálogo</h2></div></div><div id="reportBreakdown" class="breakdown"></div></div></div>
+</section>
+<footer class="footer"><span>STOCKLY © 2026</span><span>INVENTORY CONTROL · DEMO BY TEKNOVYA</span><span>GESTIONÁ CON CLARIDAD ✦</span></footer>
+</main>
+
+<div class="backdrop" id="backdrop"></div>
+<section class="modal" id="productModal" role="dialog" aria-modal="true"><button class="modal-close" data-close>×</button><p class="eyebrow">CATÁLOGO DE PRODUCTOS</p><h2 id="productModalTitle">Agregar <em>producto.</em></h2><form id="productForm">
+<input type="hidden" id="productId">
+<div class="form-grid"><label class="wide">Nombre del producto<input id="productName" placeholder="Ej. Auriculares inalámbricos" required></label><label>SKU / Código<input id="productSku" placeholder="AUD-001" required></label><label>Categoría<select id="productCategory"><option>Electrónica</option><option>Accesorios</option><option>Almacén</option><option>Indumentaria</option><option>Hogar</option><option>Otros</option></select></label><label>Precio de costo (ARS)<input id="productCost" type="number" min="0" required></label><label>Precio de venta (ARS)<input id="productPrice" type="number" min="0" required></label><label>Stock actual<input id="productStock" type="number" min="0" required></label><label>Stock mínimo<input id="productMin" type="number" min="0" value="5" required></label><label class="wide">Proveedor (opcional)<input id="productSupplier" placeholder="Nombre del proveedor"></label></div>
+<button class="btn btn-primary full" type="submit">Guardar producto</button></form></section>
+<section class="modal" id="movementModal" role="dialog" aria-modal="true"><button class="modal-close" data-close>×</button><p class="eyebrow">ACTUALIZACIÓN DE INVENTARIO</p><h2>Registrar <em>movimiento.</em></h2><form id="movementForm"><label>Producto<select id="movementProduct" required></select></label><div class="form-grid"><label>Tipo de movimiento<select id="movementType"><option value="in">Entrada</option><option value="out">Salida</option></select></label><label>Cantidad<input id="movementQty" type="number" min="1" value="1" required></label></div><label>Motivo / Referencia<input id="movementReason" placeholder="Ej. Compra a proveedor / Venta #104"></label><button class="btn btn-primary full" type="submit">Confirmar movimiento</button></form></section>
+<section class="modal" id="supplierModal" role="dialog" aria-modal="true"><button class="modal-close" data-close>×</button><p class="eyebrow">RED DE ABASTECIMIENTO</p><h2>Nuevo <em>proveedor.</em></h2><form id="supplierForm"><label>Nombre comercial<input id="supplierName" required placeholder="Ej. Distribuidora Central"></label><div class="form-grid"><label>Contacto<input id="supplierContact" placeholder="Nombre"></label><label>Teléfono<input id="supplierPhone" placeholder="+54 11..."></label></div><label>Correo electrónico<input id="supplierEmail" type="email" placeholder="contacto@empresa.com"></label><button class="btn btn-primary full" type="submit">Guardar proveedor</button></form></section>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body></html>
