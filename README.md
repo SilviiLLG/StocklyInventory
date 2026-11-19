@@ -15,14 +15,6 @@ Demo frontend de gestión de inventario desarrollada para el portfolio de Teknov
 - Exportación del catálogo a CSV.
 - Persistencia local con `localStorage`.
 - Diseño responsive para celular y escritorio.
-
-## Deploy en Vercel
-1. Subí `index.html`, `styles.css`, `app.js` y `README.md` a la raíz de un repositorio GitHub.
-2. En Vercel, importá el repositorio.
-3. Framework Preset: **Other**.
-4. Build Command: vacío.
-5. Output Directory: `.`.
-6. Deploy.
-
+  
 ## Importante: alcance de esta demo
 Esta versión funciona completamente en el navegador y guarda la información en `localStorage`. No tiene usuarios reales, base de datos compartida ni sincronización entre dispositivos. Los datos iniciales son ficticios. Para usarla en un comercio real habría que agregar backend, base de datos, autenticación, permisos, copias de seguridad y controles de auditoría.
